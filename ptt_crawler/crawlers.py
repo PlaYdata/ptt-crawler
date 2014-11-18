@@ -9,20 +9,23 @@ gen_ptt_board_page_url = lambda b_name: "https://www.ptt.cc/bbs/%s/index.html" %
 
 
 def get_ptt_article_url_lists(one_ptt_url):
-    res = requests.get(one_ptt_url,verify=False)
+    cookies = dict(over18="1")
+    res = requests.get(one_ptt_url,verify=False,cookies=cookies)
     S = PyQuery(res.text)
     _article_urls = S(".title a").map(lambda i, el:PyQuery(el).attr("href"))
     article_urls = ["https://www.ptt.cc%s" % one_url for one_url in _article_urls if one_url.startswith("/bbs")]
     return article_urls
 
 def get_max_pages(one_ptt_board_url):
-    res = requests.get(one_ptt_board_url,verify=False)
+    cookies = dict(over18="1")
+    res = requests.get(one_ptt_board_url,verify=False,cookies=cookies)
     S = PyQuery(res.text)
     return int(PyQuery(S("div.btn-group.pull-right > a")[1]).attr("href").split("index")[1].split(".")[0])
 
 
 def get_all_pages_url(one_ptt_board_url):
-    max_n = get_max_pages(one_ptt_board_url)
+    cookies = dict(over18="1")
+    max_n = get_max_pages(one_ptt_board_url,cookies=cookies)
     url_head = one_ptt_board_url.split("index")[0]
     all_urls = [ url_head + "index%s.html" % ii for ii in [""] + range(max_n)]
     return all_urls
@@ -30,8 +33,9 @@ def get_all_pages_url(one_ptt_board_url):
 
 
 def get_one_article_meta_data(one_article_url):
-    one_article_res = requests.get(one_article_url,verify=False)
-    SS = PyQuery(one_article_res.text)
+    cookies = dict(over18="1")
+    one_article_res = requests.get(one_article_url,verify=False,cookies=cookies)
+    SS = PyQuery(one_article_res.text)1
     one_article_data = {}
     one_article_data["Board"] = SS(".article-metaline-right > .article-meta-value").text()
     one_article_data.update(dict(zip(["user","title","time"],SS(".article-metaline > .article-meta-value").map(lambda i, el:PyQuery(el).text()))))
