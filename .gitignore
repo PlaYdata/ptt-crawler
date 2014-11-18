@@ -1,0 +1,23 @@
+
+
+*.db
+
+#######################
+# Eclipse Project Files
+####################### 
+.project
+.pydevproject
+
+
+# Mac Related Files
+.DS_Store
+
+# Python Related Files
+*.pyc
+*.ipynb_checkpoints
+
+
+
+
+
+
