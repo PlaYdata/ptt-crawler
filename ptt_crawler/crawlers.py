@@ -35,7 +35,7 @@ def get_all_pages_url(one_ptt_board_url):
 def get_one_article_meta_data(one_article_url):
     cookies = dict(over18="1")
     one_article_res = requests.get(one_article_url,verify=False,cookies=cookies)
-    SS = PyQuery(one_article_res.text)1
+    SS = PyQuery(one_article_res.text)
     one_article_data = {}
     one_article_data["Board"] = SS(".article-metaline-right > .article-meta-value").text()
     one_article_data.update(dict(zip(["user","title","time"],SS(".article-metaline > .article-meta-value").map(lambda i, el:PyQuery(el).text()))))
