@@ -25,7 +25,7 @@ def get_max_pages(one_ptt_board_url):
 
 def get_all_pages_url(one_ptt_board_url):
     cookies = dict(over18="1")
-    max_n = get_max_pages(one_ptt_board_url,cookies=cookies)
+    max_n = get_max_pages(one_ptt_board_url)
     url_head = one_ptt_board_url.split("index")[0]
     all_urls = [ url_head + "index%s.html" % ii for ii in [""] + range(max_n)]
     return all_urls
